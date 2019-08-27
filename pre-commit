@@ -36,6 +36,8 @@ fi
 # 获取本次提交的差异文件
 a=`git status -s`
 
+errorSum = 0
+
 array=(${a//,/ })
 for var in ${array[@]}
 do
@@ -45,7 +47,7 @@ do
 
     # check php file
     if [[ ! ${var} =~ ".php" ]]; then
-        echo "Check file $var: not php file, ignoring..."
+        #echo "Check file $var: not php file, ignoring..."
         continue
     fi
 
@@ -58,8 +60,8 @@ do
             do
                 echo ${line}
             done
-            #
-            exit 1
+                let errorSum+=1
+            #exit 1
         else
             echo -e "\033[5;31m phplint file [$var] success \n\n\n \033[0m"
         fi
@@ -78,14 +80,22 @@ echo -e "\n"
             do
                 echo ${line}
             done
-                echo -e "\033[42;34m PHPSTAN CHECK END \n  \033[0m"
-            #
-            exit 1
+                let errorSum+=1
+                #echo -e "\033[42;34m PHPSTAN CHECK END \n  \033[0m"
+            #exit 1
         else
             echo -e "\033[5;31m phpstan file [$var] success \033[0m"
         fi
     fi
-done
 
-echo -e "\033[5;31m check success,commit success \033[0m"
-exit 0
+done
+echo "所有的错误有 [$errorSum]"
+
+if [[ $errorSum = 0 ]]; then
+    echo "所有错误已处理完毕"
+    echo -e "\033[5;31m check success,commit success \033[0m"
+    exit 0
+else
+    echo "请解决错误后再提交"
+    exit 1
+fi
