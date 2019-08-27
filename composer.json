@@ -9,6 +9,7 @@
     }
   ],
   "require": {
+    "nikic/php-parser": "4.2.3",
     "overtrue/phplint": "1.1.9",
     "phpstan/phpstan": "0.11.15"
   },
