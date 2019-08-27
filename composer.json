@@ -1,0 +1,30 @@
+{
+  "name": "cul8r/phpsat",
+  "description": "php code check tool",
+  "type": "util",
+  "authors": [
+    {
+      "name": "cul8r",
+      "email": "clarence1124@protonmail.com"
+    }
+  ],
+  "require": {
+    "overtrue/phplint": "1.1.9",
+    "phpstan/phpstan": "0.11.15"
+  },
+  "bin": [
+    "bin/phpsat"
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://mirrors.aliyun.com/composer/"
+    },
+    {
+      "packagist": false
+    }
+  ],
+  "config": {
+    "secure-http": false
+  }
+}
