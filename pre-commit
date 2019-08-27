@@ -58,7 +58,7 @@ do
             do
                 echo ${line}
             done
-            askContinue
+            #
             exit 1
         else
             echo -e "\033[5;31m phplint file [$var] success \n\n\n \033[0m"
@@ -79,7 +79,7 @@ echo -e "\n"
                 echo ${line}
             done
                 echo -e "\033[42;34m PHPSTAN CHECK END \n  \033[0m"
-            #askContinue
+            #
             exit 1
         else
             echo -e "\033[5;31m phpstan file [$var] success \033[0m"
