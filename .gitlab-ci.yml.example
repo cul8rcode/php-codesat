@@ -1,0 +1,65 @@
+image: php:7.1
+stages:
+    - install_deps
+    - code_analyse
+    - deploy_pre
+    - deploy_prod
+    - rollback_pre
+    - rollback_prod
+    
+cache:
+    key: $\{CI_COMMIT_REF_SLUG\}
+    paths:
+        - vendor/
+install_deps:
+    stage: install_deps
+    only:
+        - master
+    script:
+        - bin/dotenv-generator restart -c=config/dotEnvGenerator_prod.yml
+        - /usr/local/bin/composer install
+
+code_analyse:
+    stage: code_analyse
+    only:
+        - master
+    script:
+        - phpstan analyse --memory-limit=1G --configuration=phpstan.neon
+        
+deploy_pre:
+    stage: deploy_pre
+    only:
+        - master
+    when:
+        manual
+    script:
+        - echo '请移步上线系统操作上预发布'
+        - echo '操作结束'
+
+deploy_prod:
+    stage: deploy_prod
+    only:
+        - master
+    when:
+        manual
+    script:
+        - echo '请移步上线系统操作上线'
+        - echo '操作结束'
+rollback_pre:
+    stage: rollback_pre
+    only:
+        - master
+    when:
+        manual
+    script:
+        - echo '请移步运维上线系统回滚'
+        - echo '操作结束'
+rollback_prod:
+    stage: rollback_prod
+    only:
+        - master
+    when:
+        manual
+    script:
+        - echo '请移步运维上线系统回滚'
+        - echo '操作结束'
