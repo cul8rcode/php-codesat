@@ -68,23 +68,23 @@ function install()
         echo $phplint_check_rs[0] . "\n";
     }
 
-    # check phpcs
-    echo "Checking phpcs install...\n";
-    exec('phpcs --version', $phpcs_check_rs, $return_var);
+    # check phpstan
+    echo "Checking phpstan install...\n";
+    exec('phpstan --version', $phpstan_check_rs, $return_var);
     if ($return_var) {
-        echo "Checking phpcs failed! Please install phpcs first!";
+        echo "Checking phpstan failed! Please install phpstan first!";
         exit(1);
     } else {
-        echo "Checking phpcs success!\n";
-        echo $phpcs_check_rs[0] . "\n";
+        echo "Checking phpstan success!\n";
+        echo $phpstan_check_rs[0] . "\n";
     }
 
     if (is_file('./.git/hooks/pre-commit')) {
         exec('mv ./.git/hooks/pre-commit ./.git/hooks/pre-commit.bak.' . time());
     }
-    exec('cp ./vendor/zhenggui/php-cc/pre-commit ./.git/hooks');
+    exec('cp ./vendor/cul8r/php-codesat/pre-commit ./.git/hooks');
 
-    echo "php-cc install success!\n";
+    echo "php-codesat install success!\n";
     exit(0);
 }
 

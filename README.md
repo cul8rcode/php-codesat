@@ -13,7 +13,7 @@ composer require cul8r/php-codesat
 这样，在git commit之前，就会执行phplint和phpstan检查待提交的文件，如果不满足要求，则会组织代码提交。
 
 #### 指令
-|指令 (composer exec -v php-codesat {指令}|用法|
+|指令 (composer exec -v phpsat {指令}|用法|
 |----|----|
 |install|安装php-codesat|
 |remove|移除php-codesat|
