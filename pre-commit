@@ -1,14 +1,5 @@
 #!/usr/bin/env bash
 
-function askContinue() {
-    read -p "Errors found, input [y/yes] to continue to commit:" content
-    if [[ ${content} == "y" || ${content} == "yes" ]] ;then
-        echo "Errors found, but continue to commit"
-        exit 0
-    fi
-    echo "Abort to commit ~"
-    exit 1
-}
 
 # 引入配置文件
 # read config file
@@ -62,36 +53,39 @@ do
     if [[ ${phplint} == "true" ]]; then
         phplintResult=`${phplint_path} $var | grep error`
         if [[ x"$phplintResult" != x ]]; then
-            echo "-------------------------------------"
-            echo "Git commit error, get phplint errors:"
+            echo -e "\033[43;34m ---------------PHPLINT ERROR-----------------------------:\033[0m \n"
             ${phplint_path} ${var} | while read line
             do
                 echo ${line}
             done
-            #askContinue
+            askContinue
             exit 1
         else
-            echo "phplint file [$var] success !"
+            echo -e "\033[5;31m phplint file [$var] success \n\n\n \033[0m"
         fi
     fi
+
+echo -e "\033[42;34m PHPSTAN CHECK START \n  \033[0m"
+echo -e "\n"
 
     # phpstan
     if [[ ${phpstan} == "true" ]]; then
         phpstanResult=`${phpstan_path} analyse --memory-limit=1G --configuration=phpstan.neon ${var} | grep Line`
         if [[ x"$phpstanResult" != x ]]; then
-            echo "-------------------------------------"
-            echo "Git commit error, get phpstan errors:"
+            echo -e "\033[41;30m ---------PHPSTAN ERROR------------:\033[0m \n"
+
             ${phpstan_path} analyse --memory-limit=1G --configuration=phpstan.neon ${var} | while read line
             do
                 echo ${line}
             done
+                echo -e "\033[42;34m PHPSTAN CHECK END \n  \033[0m"
             #askContinue
             exit 1
         else
-            echo "phpstan file [$var] success !"
+            echo -e "\033[5;31m phpstan file [$var] success \033[0m"
         fi
     fi
 done
 
-echo "Congratulations! Code check success!"
+echo -e "\033[5;31m check success,commit success \033[0m"
 exit 0
